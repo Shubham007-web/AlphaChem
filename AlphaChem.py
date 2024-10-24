@@ -271,28 +271,57 @@ def lesson_content_prompt_part2(unit_name, chapter_name, lesson_name, essential_
     """
 
 
-# Function to handle parallel content generation
-def parallel_generate_content(unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon):
-    # Define section prompts
-    section_prompts = [
-        lesson_content_prompt_part1(unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon),
-        lesson_content_prompt_part2(unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon)
-    ]
+# # Function to handle parallel content generation
+# def parallel_generate_content(unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon):
+#     # Define section prompts
+#     section_prompts = [
+#         lesson_content_prompt_part1(unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon),
+#         lesson_content_prompt_part2(unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon)
+#     ]
     
-    # Parallel generation of content sections
-    try:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = [executor.submit(generate_lesson_section, section) for section in section_prompts]
-            results = [future.result() for future in concurrent.futures.as_completed(futures)]
+#     # Parallel generation of content sections
+#     try:
+#         with concurrent.futures.ThreadPoolExecutor() as executor:
+#             futures = [executor.submit(generate_lesson_section, section) for section in section_prompts]
+#             results = [future.result() for future in concurrent.futures.as_completed(futures)]
         
-        # Check if any of the results are None
-        if any(result is None for result in results):
-            print("Error: One of the content sections failed to generate.")
-            return None
+#         # Check if any of the results are None
+#         if any(result is None for result in results):
+#             print("Error: One of the content sections failed to generate.")
+#             return None
         
-        # Combine results from both parts
-        complete_lesson_content = "\n\n".join(results)
-        return complete_lesson_content
-    except Exception as e:
-        print(f"Error generating lesson content: {e}")
+#         # Combine results from both parts
+#         complete_lesson_content = "\n\n".join(results)
+#         return complete_lesson_content
+#     except Exception as e:
+#         print(f"Error generating lesson content: {e}")
+#         return None
+
+# Function to handle sequential content generation to ensure correct order
+def sequential_generate_content(unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon):
+    # Generate content for part 1 first
+    lesson_part1_prompt = lesson_content_prompt_part1(
+        unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon
+    )
+    lesson_part1_content = generate_lesson_section(lesson_part1_prompt)
+    
+    # Check if part 1 content is None
+    if lesson_part1_content is None:
+        print("Error: Failed to generate content for Part 1.")
         return None
+
+    # After part 1 is generated, generate content for part 2
+    lesson_part2_prompt = lesson_content_prompt_part2(
+        unit_name, chapter_name, lesson_name, essential_question, lesson_vocabulary, lesson_objectives, phenomenon
+    )
+    lesson_part2_content = generate_lesson_section(lesson_part2_prompt)
+    
+    # Check if part 2 content is None
+    if lesson_part2_content is None:
+        print("Error: Failed to generate content for Part 2.")
+        return None
+
+    # Combine the results of both parts
+    complete_lesson_content = f"{lesson_part1_content}\n\n{lesson_part2_content}"
+    
+    return complete_lesson_content
