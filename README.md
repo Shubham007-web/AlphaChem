@@ -16,7 +16,11 @@ This project is a Python-based system designed to generate structured chemistry 
 ## File and Folder Structure
 
 The system organizes the generated content into a structured folder hierarchy:
-AI_generated_content/ └── unitX/ └── chapterY/ └── lessonZ/ └── U{X}Ch{Y}L{Z}.docx
+AI_generated_content/ unitX/
+└── chapterY/
+    └── lessonZ/
+        └── U{X}Ch{Y}L{Z}.docx
+
 
 Where `X`, `Y`, and `Z` correspond to unit, chapter, and lesson numbers.
 
