@@ -19,7 +19,7 @@ def main():
     chapter_name = st.text_input("Enter the Chapter Name")
     lesson_name = st.text_input("Enter the Lesson Name")
     essential_question = st.text_area("Enter the Essential Question")
-    lesson_vocabulary = st.text_area("Enter the Lesson Vocabulary (comma-separated)")
+    lesson_vocabulary = st.text_area("Enter the Lesson Vocabulary ")
     lesson_objectives = st.text_area("Enter the Lesson Objectives")
     phenomenon = st.text_area("Enter the Phenomenon or Storyline for the Lesson")
 
