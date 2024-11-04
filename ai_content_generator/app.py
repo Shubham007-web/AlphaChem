@@ -10,7 +10,7 @@ api_key = "your_openai_api_key"
 
 # Main function for Streamlit app
 def main():
-    st.title("Alpha Chemistry | Lesson Generator App | DeveSh Kalu")
+    st.title("Lesson Generator App")
 
     # Collecting inputs using Streamlit widgets
     unit_name = st.text_input("Enter the Unit Name")
