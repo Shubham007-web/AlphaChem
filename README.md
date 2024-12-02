@@ -22,7 +22,7 @@ The generated content ensures a high **Flesch Reading Ease Score** (above 70) an
 - **Chain-of-Thought Prompting**:
   - Ensures logical, step-by-step reasoning to create high-quality educational materials.
 - **Retrieval-Augmented Generation (RAG)**
-  - Build the pipeline to store in vector database like **fiase** and used vector embedding.
+  - Build the pipeline to store in vector database like **fiass** and used vector embedding.
   - Using external knoweldege to get desried output build Rag pipeline.
 - **Automated File Management**:
   - Organizes lessons into folders with automatic versioning (`V1`, `V2`, etc.).
@@ -42,6 +42,7 @@ AI_generated_content/
 │   │   ├── LessonZ/
 │   │   │   └── U{X}Ch{Y}L{Z}.docx
 
+```
 
 ## Requirements
 
