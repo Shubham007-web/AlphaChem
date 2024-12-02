@@ -2,27 +2,46 @@
 
 ## Overview
 
-This project is a Python-based system designed to generate structured chemistry lesson content for students in grades 9-10 (age 14-15) of US students based on eduactional framework NGSS (Next Generation Science Standards), content outline, variuous eduactional conginiative levels like DOK levels, bloom's taxnomny. The Next Generation Science Standards (NGSS) are based on the **"Framework K–12 Science Education"** that was created by the National Research Council. The system uses OpenAI's GPT models to produce easy-to-read educational content aligned with modern instructional strategies such as SMART objectives and phenomenon-based learning while maintaing readibiity score(Flesch Reading Ease Score) and Flesch-Kincaid Grade Level. The generated content is saved in `.docx` format, following a well-organized folder structure.
+**AlphaChemistry Manuscripts Content Generator** is an AI-powered system designed to create structured chemistry lesson content for students in grades 9–10 (ages 14–15) in the United States. This system aligns with the **Next Generation Science Standards (NGSS)**, which are based on the **"Framework for K–12 Science Education"** by the National Research Council. The content generation leverages OpenAI's GPT models and incorporates educational strategies such as **SMART objectives**, **DOK Levels**, **Bloom's Taxonomy**, and **phenomenon-based learning**.
+
+The generated content ensures a high **Flesch Reading Ease Score** (above 70) and aligns with the **Flesch-Kincaid Grade Level** for easy readability. Outputs are saved in `.docx` format with an automated folder structure, ensuring consistency and version control.
+
+---
 
 ## Key Features
+1. Lesson
+2. Chapter (Opener & Closer)
+3. Unit (Opener & Closer)
+- **Structured Content Generation Parts (prompts)**:
+  - **Part 1**: Engages students with sections like Engage, Evaluate, and Elaborate.
+  - **Part 2**: Detailed explanations, including the "Explain" section (up to 3000 words).
+  - **Part 3**: Engages students with sections like Elaborate (Power Up),  Progress Check (Final Evaluation), and   Extend (Beyond the Lesson).
+- **Instructional Framework Alignment**:
+  - Content adheres to NGSS and modern instructional frameworks.
+  - Incorporates educational strategies such as **SMART objectives**, **DOK Levels**, **Bloom's Taxonomy**, and **phenomenon-based learning**.
+- **Chain-of-Thought Prompting**:
+  - Ensures logical, step-by-step reasoning to create high-quality educational materials.
+- **Retrieval-Augmented Generation (RAG)**
+  - Build the pipeline to store in vector database like **fiase** and used vector embedding.
+  - Using external knoweldege to get desried output build Rag pipeline.
+- **Automated File Management**:
+  - Organizes lessons into folders with automatic versioning (`V1`, `V2`, etc.).
+- **Readability Guarantee**:
+  - Ensures lessons are accessible to the target grade level with a Flesch Reading Ease Score of 70+.
 
-- **Two-Part Content Generation**: Divides content creation into two parts:
-  - **Part 1**: Focuses on the structure and an extended "Explain" section (up to 3000 words).
-  - **Part 2**: Covers the remaining lesson sections (Engage, Evaluate, Elaborate).
-- **Chain-of-Thought Prompting**: Ensures detailed, logical explanations that are appropriate for high school students.
-- **Automated Document Organization**: Generated lessons are saved with automatic folder structure and version control (`V1`, `V2`, etc.).
-- **Flesch Reading Ease Score**: Ensures content has a reading ease score above 90, making it suitable for a target audience of U.S. grade 9 students.
+---
 
 ## File and Folder Structure
 
-The system organizes the generated content into a structured folder hierarchy:
-AI_generated_content/
-└── unitX/
-└── chapterY/
-└── lessonZ/
-└── U{X}Ch{Y}L{Z}.docx
+The system organizes generated content into a structured hierarchy:
 
-Where `X`, `Y`, and `Z` correspond to unit, chapter, and lesson numbers.
+```plaintext
+AI_generated_content/
+├── UnitX/
+│   ├── ChapterY/
+│   │   ├── LessonZ/
+│   │   │   └── U{X}Ch{Y}L{Z}.docx
+
 
 ## Requirements
 
@@ -30,6 +49,11 @@ Where `X`, `Y`, and `Z` correspond to unit, chapter, and lesson numbers.
 - `python-docx` for handling `.docx` files
 - OpenAI API for GPT-based content generation
 - `os` and `re` for file management
+- A vector database (fiass)
+- Embedding
+- OpenAI models (chatgpt-4o-latest, gpt-4o)
+- Langchain, Langchain_community
+- 
 
 ## Installation
 
