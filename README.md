@@ -1,33 +1,56 @@
 # AlphaChemistry Manuscripts Content Generator
 
+## Table of Contents
+1. [Overview](#overview)
+2. [Key Features](#key-features)
+3. [File and Folder Structure](#file-and-folder-structure)
+4. [Requirements](#requirements)
+5. [Installation](#installation)
+6. [Usage](#usage)
+7. [File Descriptions](#file-descriptions)
+8. [Customization](#customization)
+9. [Future Enhancements](#future-enhancements)
+10. [License](#license)
+
+---
+
 ## Overview
 
 **AlphaChemistry Manuscripts Content Generator** is an AI-powered system designed to create structured chemistry lesson content for students in grades 9–10 (ages 14–15) in the United States. This system aligns with the **Next Generation Science Standards (NGSS)**, which are based on the **"Framework for K–12 Science Education"** by the National Research Council. The content generation leverages OpenAI's GPT models and incorporates educational strategies such as **SMART objectives**, **DOK Levels**, **Bloom's Taxonomy**, and **phenomenon-based learning**.
 
-The generated content ensures a high **Flesch Reading Ease Score** (above 70) and aligns with the **Flesch-Kincaid Grade Level** for easy readability. Outputs are saved in `.docx` format with an automated folder structure, ensuring consistency and version control.
+The generated content ensures a high **Flesch Reading Ease Score** (above 70), chosen to maintain a balance between accessibility and technical accuracy for high school students. Outputs are saved in `.docx` format with an automated folder structure, ensuring consistency and version control.
 
 ---
 
 ## Key Features
-1. Lesson
-2. Chapter (Opener & Closer)
-3. Unit (Opener & Closer)
-- **Structured Content Generation Parts (prompts)**:
-  - **Part 1**: Engages students with sections like Engage, Evaluate, and Elaborate.
-  - **Part 2**: Detailed explanations, including the "Explain" section (up to 3000 words).
-  - **Part 3**: Engages students with sections like Elaborate (Power Up),  Progress Check (Final Evaluation), and   Extend (Beyond the Lesson).
-- **Instructional Framework Alignment**:
-  - Content adheres to NGSS and modern instructional frameworks.
-  - Incorporates educational strategies such as **SMART objectives**, **DOK Levels**, **Bloom's Taxonomy**, and **phenomenon-based learning**.
-- **Chain-of-Thought Prompting**:
-  - Ensures logical, step-by-step reasoning to create high-quality educational materials.
-- **Retrieval-Augmented Generation (RAG)**
-  - Build the pipeline to store in vector database like **fiass** and used vector embedding.
-  - Using external knoweldege to get desried output build Rag pipeline.
-- **Automated File Management**:
-  - Organizes lessons into folders with automatic versioning (`V1`, `V2`, etc.).
-- **Readability Guarantee**:
-  - Ensures lessons are accessible to the target grade level with a Flesch Reading Ease Score of 70+.
+
+### Lesson Structure:
+1. **Lesson**
+2. **Chapter** (Opener & Closer)
+3. **Unit** (Opener & Closer)
+
+### **Structured Content Generation Parts (Prompts):**
+- **Part 1**: Engages students with sections like Engage, Evaluate, and Elaborate.
+- **Part 2**: Detailed explanations, including the "Explain" section (up to 3000 words).
+- **Part 3**: Engages students with sections like Elaborate (Power Up), Progress Check (Final Evaluation), and Extend (Beyond the Lesson).
+
+### **Instructional Framework Alignment:**
+- Content adheres to NGSS and modern instructional frameworks.
+- Incorporates educational strategies such as **SMART objectives**, **DOK Levels**, **Bloom's Taxonomy**, and **phenomenon-based learning**.
+
+### **Chain-of-Thought Prompting:**
+- Ensures logical, step-by-step reasoning to create high-quality educational materials.
+
+### **Retrieval-Augmented Generation (RAG):**
+- Implements a RAG pipeline to enhance content accuracy by incorporating external knowledge.
+- Uses a vector database like **FAISS** to store and retrieve embeddings.
+- Dynamically enriches lesson content by integrating relevant information retrieved from external sources.
+
+### **Automated File Management:**
+- Organizes lessons into folders with automatic versioning (`V1`, `V2`, etc.).
+
+### **Readability Guarantee:**
+- Ensures lessons are accessible to the target grade level with a Flesch Reading Ease Score of 70+, balancing technical detail and student comprehension.
 
 ---
 
