@@ -1,5 +1,7 @@
 # AlphaChemistry Manuscripts Content Generator
-![image](https://github.com/user-attachments/assets/c17e466a-a517-4fcd-a356-727122e68401)
+![image](https://github.com/user-attachments/assets/4124ed61-a24f-4698-a197-0cf049ba06e8)
+
+
 
 ## Table of Contents
 1. [Overview](#overview)
