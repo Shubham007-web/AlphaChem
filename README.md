@@ -1,8 +1,8 @@
-# AI-Powered Chemistry Lesson Content Generator
+# AlphaChemistry Manuscripts Content Generator
 
 ## Overview
 
-This project is a Python-based system designed to generate structured chemistry lesson content for students in grades 9-10 (age 14-15). The system uses OpenAI's GPT models to produce easy-to-read educational content aligned with modern instructional strategies such as SMART objectives and phenomenon-based learning. The generated content is saved in `.docx` format, following a well-organized folder structure.
+This project is a Python-based system designed to generate structured chemistry lesson content for students in grades 9-10 (age 14-15) of US students based on eduactional framework NGSS (Next Generation Science Standards), content outline, variuous eduactional conginiative levels like DOK levels, bloom's taxnomny. The Next Generation Science Standards (NGSS) are based on the **"Framework K–12 Science Education"** that was created by the National Research Council. The system uses OpenAI's GPT models to produce easy-to-read educational content aligned with modern instructional strategies such as SMART objectives and phenomenon-based learning while maintaing readibiity score(Flesch Reading Ease Score) and Flesch-Kincaid Grade Level. The generated content is saved in `.docx` format, following a well-organized folder structure.
 
 ## Key Features
 
