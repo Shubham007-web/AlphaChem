@@ -29,27 +29,27 @@ The generated content ensures a high **Flesch Reading Ease Score** (above 70), c
 2. **Chapter** (Opener & Closer)
 3. **Unit** (Opener & Closer)
 
-### **Structured Content Generation Parts (Prompts):**
+#### **Structured Content Generation Parts (Prompts):**
 - **Part 1**: Engages students with sections like Engage, Evaluate, and Elaborate.
 - **Part 2**: Detailed explanations, including the "Explain" section (up to 3000 words).
 - **Part 3**: Engages students with sections like Elaborate (Power Up), Progress Check (Final Evaluation), and Extend (Beyond the Lesson).
 
-### **Instructional Framework Alignment:**
+#### **Instructional Framework Alignment:**
 - Content adheres to NGSS and modern instructional frameworks.
 - Incorporates educational strategies such as **SMART objectives**, **DOK Levels**, **Bloom's Taxonomy**, and **phenomenon-based learning**.
 
-### **Chain-of-Thought Prompting:**
+#### **Chain-of-Thought Prompting:**
 - Ensures logical, step-by-step reasoning to create high-quality educational materials.
 
-### **Retrieval-Augmented Generation (RAG):**
+#### **Retrieval-Augmented Generation (RAG):**
 - Implements a RAG pipeline to enhance content accuracy by incorporating external knowledge.
 - Uses a vector database like **FAISS** to store and retrieve embeddings.
 - Dynamically enriches lesson content by integrating relevant information retrieved from external sources.
 
-### **Automated File Management:**
+#### **Automated File Management:**
 - Organizes lessons into folders with automatic versioning (`V1`, `V2`, etc.).
 
-### **Readability Guarantee:**
+#### **Readability Guarantee:**
 - Ensures lessons are accessible to the target grade level with a Flesch Reading Ease Score of 70+, balancing technical detail and student comprehension.
 
 ---
