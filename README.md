@@ -1,4 +1,5 @@
 # AlphaChemistry Manuscripts Content Generator
+![image](https://github.com/user-attachments/assets/c17e466a-a517-4fcd-a356-727122e68401)
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -70,14 +71,13 @@ AI_generated_content/
 ## Requirements
 
 - Python 3.x
-- `python-docx` for handling `.docx` files
+- python-docx for handling .docx files
 - OpenAI API for GPT-based content generation
-- `os` and `re` for file management
-- A vector database (fiass)
+- os and re for file management
+- A vector database (FAISS)
 - Embedding
-- OpenAI models (chatgpt-4o-latest, gpt-4o)
-- Langchain, Langchain_community
-- 
+- OpenAI models (e.g., chatgpt-4-latest, gpt-4)
+- LangChain, langchain_community
 
 ## Installation
 
