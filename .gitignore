@@ -16,3 +16,6 @@ __pycache__/
 
 # Generated lesson output
 U*Ch*L*.docx
+
+# ChromaDB local store (optional memory)
+.chroma/

@@ -68,9 +68,13 @@ AlphaChem/
 ├── requirements.txt
 ├── .env.example             # Copy to .env and add your API key
 ├── src/                     # Python source
+│   ├── core.py              # LLM factory, prompts, .docx export, Phoenix tracing, CLI
+│   ├── graph.py             # LangGraph workflow (planner→part1→part2→part3→summary→eval→revision→export)
+│   ├── memory.py            # Optional ChromaDB lesson memory (graph runs without it)
+│   ├── evals.py             # Quality metrics + Phoenix score logging
 │   ├── openAI_API.py        # OpenAI client / key loading
 │   └── azure_llm.py         # Azure OpenAI client
-├── notebooks/               # Lesson-generation notebooks
+├── notebooks/               # Original lesson-generation notebooks (pre-graph)
 ├── data/                    # Input data
 │   └── AlphaChem_LOs.csv    # Learning objectives + NGSS metadata
 ├── references/              # SME exemplars

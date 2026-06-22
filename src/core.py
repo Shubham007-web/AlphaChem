@@ -56,16 +56,24 @@ def _truthy(value: str | None) -> bool:
     return str(value).lower() in ("1", "true", "yes", "on")
 
 
+# Cached so repeated calls (e.g. from evals.py and graph.py) register only once.
+_TRACER_PROVIDER = None
+
+
 def setup_tracing(project_name: str = "alphachem"):
     """Enable Arize Phoenix tracing for all LangChain LLM/chain calls.
 
     Auto-instruments LangChain via OpenInference, so every prompt, model call,
     token count and latency is captured with no per-call code changes. Controlled
     by env vars (see the module docstring). Safe to call even if Phoenix is not
-    installed — it prints a hint and returns None instead of raising.
+    installed — it prints a hint and returns None instead of raising. Idempotent:
+    registers once per process and returns the cached tracer provider thereafter.
 
     Returns the OpenTelemetry tracer provider, or None if tracing is disabled/absent.
     """
+    global _TRACER_PROVIDER
+    if _TRACER_PROVIDER is not None:
+        return _TRACER_PROVIDER
     if not _truthy(os.environ.get("PHOENIX_TRACING", "true")):
         return None
     try:
@@ -82,6 +90,7 @@ def setup_tracing(project_name: str = "alphachem"):
     tracer_provider = register(project_name=project_name, auto_instrument=True)
     endpoint = os.environ.get("PHOENIX_COLLECTOR_ENDPOINT", "http://localhost:6006")
     print(f"[tracing] Phoenix tracing enabled — project={project_name!r}, view at {endpoint}")
+    _TRACER_PROVIDER = tracer_provider
     return tracer_provider
 
 
@@ -300,21 +309,17 @@ def _chain(human_template: str, llm):
 # --------------------------------------------------------------------------- #
 def generate_lesson(lesson: dict, llm=None, two_part: bool = False,
                     provider: str | None = None) -> str:
-    """Generate lesson content for a lesson dict (see SAMPLE_LESSON for keys).
+    """Generate lesson content via the LangGraph workflow and return the text.
 
-    provider selects the LLM ('azure' | 'openai' | 'ollama'); defaults to env.
-    Set two_part=True to generate long lessons in two calls (Large Content mode)
-    and concatenate the result.
+    Backed by graph.py (planner -> part1 -> part2 -> part3 -> summary), which
+    replaced the old single-chain implementation. Returns the assembled lesson
+    without evaluating or exporting it (use graph.run_lesson_graph() for the full
+    pipeline). The ``llm`` and ``two_part`` arguments are accepted for backward
+    compatibility; the multi-node graph supersedes the old two-part split.
     """
-    llm = llm or build_llm(provider)
-    variables = {"reading_score": READING_SCORE, **lesson}
+    from graph import generate_content  # lazy import avoids a circular import
 
-    if not two_part:
-        return _chain(HUMAN_TEMPLATE, llm).invoke(variables)
-
-    part1 = _chain(HUMAN_TEMPLATE_PART1, llm).invoke(variables)
-    part2 = _chain(HUMAN_TEMPLATE_PART2, llm).invoke(variables)
-    return f"{part1}\n\n{part2}"
+    return generate_content(lesson, provider=provider)
 
 
 # --------------------------------------------------------------------------- #
@@ -378,14 +383,24 @@ def save_lesson_to_docx(unit_name: str, chapter_name: str, lesson_name: str,
 # CLI entry point
 # --------------------------------------------------------------------------- #
 def main(lesson: dict = SAMPLE_LESSON, two_part: bool = False,
-         provider: str | None = None) -> str:
-    """Generate and save one lesson end-to-end. Returns the output path."""
-    setup_tracing()  # must run before any LLM call so the chain is instrumented
-    content = generate_lesson(lesson, two_part=two_part, provider=provider)
-    print(content)
-    return save_lesson_to_docx(
-        lesson["unit_name"], lesson["chapter_name"], lesson["lesson_name"], content
-    )
+         provider: str | None = None, run_eval: bool = True) -> str:
+    """Run the full LangGraph pipeline end-to-end and return the saved .docx path.
+
+    planner -> part1 -> part2 -> part3 -> summary -> evaluation -> (revision) ->
+    export. The export node writes the versioned .docx; evaluation (when enabled)
+    scores the lesson and logs to Phoenix. ``two_part`` is accepted for backward
+    compatibility but no longer changes behavior (the graph always splits work).
+    """
+    from graph import run_lesson_graph  # lazy import avoids a circular import
+
+    state = run_lesson_graph(lesson, provider=provider, run_eval=run_eval)
+    print(state.get("final_lesson_content", ""))
+    results = state.get("evaluation_results") or {}
+    if results:
+        import evals
+
+        evals.print_report(results)
+    return state.get("export_path", "")
 
 
 def _ask(prompt_text: str, options: dict, default_key: str):
@@ -431,14 +446,16 @@ if __name__ == "__main__":
     parser.add_argument("--provider", choices=["azure", "openai", "ollama"],
                         help="Skip the menu and use this provider.")
     parser.add_argument("--two-part", action="store_true",
-                        help="Skip the menu and generate in two iterations.")
+                        help="Accepted for backward compatibility (no longer changes behavior).")
+    parser.add_argument("--no-eval", action="store_true",
+                        help="Skip the evaluation + revision stage (generate and export only).")
     args = parser.parse_args()
 
     # Use flags if given; otherwise ask interactively.
-    if args.provider or args.two_part:
+    if args.provider or args.two_part or args.no_eval:
         chosen_provider = args.provider or os.environ.get("PROVIDER", "ollama")
         chosen_two_part = args.two_part
     else:
         chosen_provider, chosen_two_part = _interactive_menu()
 
-    main(provider=chosen_provider, two_part=chosen_two_part)
+    main(provider=chosen_provider, two_part=chosen_two_part, run_eval=not args.no_eval)
