@@ -59,15 +59,25 @@ The generated content ensures a high **Flesch Reading Ease Score** (above 70), c
 
 ## File and Folder Structure
 
-The system organizes generated content into a structured hierarchy:
+The repository is organized by purpose:
 
 ```plaintext
-AI_generated_content/
-├── UnitX/
-│   ├── ChapterY/
-│   │   ├── LessonZ/
-│   │   │   └── U{X}Ch{Y}L{Z}.docx
-
+AlphaChem/
+├── README.md                # This file
+├── BUSINESS_PLAN.md         # Internal strategy / metrics plan
+├── requirements.txt
+├── .env.example             # Copy to .env and add your API key
+├── src/                     # Python source
+│   ├── openAI_API.py        # OpenAI client / key loading
+│   └── azure_llm.py         # Azure OpenAI client
+├── notebooks/               # Lesson-generation notebooks
+├── data/                    # Input data
+│   └── AlphaChem_LOs.csv    # Learning objectives + NGSS metadata
+├── references/              # SME exemplars
+│   └── guidelines/          # Writing guidelines & reviewed drafts
+└── outputs/                 # Generated lessons (gitignored as built artifacts)
+    └── unitX/chapterY/lessonZ/U{X}Ch{Y}L{Z}.docx
+        # versions saved as V2_, V3_, … alongside the base file
 ```
 
 ## Requirements
